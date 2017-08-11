@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class TestJdbcTemplate {
     public static JdbcTemplate setUp() {
-        String testDbUrl = "jdbc:mysql://localhost/enget_lie_bot_test";
+        String testDbUrl = "jdbc:mysql://localhost/enget_line_bot_test";
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setUrl(testDbUrl);
         dataSource.setUsername("root");

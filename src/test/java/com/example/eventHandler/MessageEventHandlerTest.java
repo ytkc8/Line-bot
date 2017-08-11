@@ -29,16 +29,17 @@ public class MessageEventHandlerTest {
     @Before
     public void setUp() throws Exception {
         messageEventHandler = new MessageEventHandler(textMessageService);
-        textMessage = new TextMessage("test");
-        when(textMessageService.replyText(anyString())).thenReturn(textMessage);
     }
 
     @Test
     public void test_handleTextMessageEvent_callsDependeciesWithCorrectArguments() throws Exception {
-        TextMessageContent textMessageContent = new TextMessageContent("", "test");
-        MessageEvent<TextMessageContent> event = new MessageEvent<>("", null, textMessageContent, null);
+        textMessage = new TextMessage("test");
+        when(textMessageService.replyText(anyString())).thenReturn(textMessage);
 
 
+        MessageEvent<TextMessageContent> event = new MessageEvent<>(
+                "", null, new TextMessageContent("", "test"), null
+        );
         TextMessage actualTextMessage = messageEventHandler.handleTextMessageEvent(event);
 
 

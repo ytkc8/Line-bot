@@ -5,4 +5,8 @@ INSERT INTO word (
  english_word
 ) VALUES
  ('いぬ', 'dog'),
- ('ねこ', 'cat');
+ ('イヌ', 'dog'),
+ ('犬', 'dog'),
+ ('ねこ', 'cat'),
+ ('ネコ', 'cat'),
+ ('猫', 'cat');

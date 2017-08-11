@@ -4,8 +4,6 @@ import com.example.repository.MessageRepository;
 import com.linecorp.bot.model.message.TextMessage;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class DefaultTextMessageService implements TextMessageService {
     private MessageRepository messageRepository;

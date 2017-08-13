@@ -1,55 +1,51 @@
 package com.example.service;
 
-import com.example.repository.MessageRepository;
+import com.linecorp.bot.client.LineMessagingService;
+import com.linecorp.bot.model.ReplyMessage;
+import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.message.TextMessageContent;
+import com.linecorp.bot.model.event.source.Source;
+import com.linecorp.bot.model.event.source.UserSource;
+import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
+import com.linecorp.bot.model.response.BotApiResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import retrofit2.Call;
+import retrofit2.Response;
 
-import java.util.Optional;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultTextMessageServiceTest {
     private DefaultTextMessageService defaultTextMessageService;
 
     @Mock
-    private MessageRepository messageRepository;
+    private LineMessagingService lineMessagingService;
 
     @Before
     public void setUp() throws Exception {
-        defaultTextMessageService = new DefaultTextMessageService(messageRepository);
+        defaultTextMessageService = new DefaultTextMessageService(lineMessagingService);
     }
 
     @Test
-    public void test_replyText_returnsTextMessage_fromRepoReturnValueString() throws Exception {
-        when(messageRepository.getEnglish(anyString())).thenReturn(Optional.of("dog"));
+    public void test_replyText_callsDependenciesWithCorrectArguments() throws Exception {
+        Source source = new UserSource("abcde");
+        TextMessageContent textMessageContent = new TextMessageContent("111", "test");
+        MessageEvent<TextMessageContent> event = new MessageEvent<>(
+                "reply token", source, textMessageContent, null
+        );
 
 
-        TextMessage returnValue = defaultTextMessageService.replyText("いぬ");
+        defaultTextMessageService.replyText(event);
 
 
-        verify(messageRepository, times(1)).getEnglish("いぬ");
-        assertThat(returnValue.getText(), equalTo("dog"));
-    }
-
-    @Test
-    public void test_replyText_returnsArgumentText_whenRepoReturnValueIsEmpty() throws Exception {
-        when(messageRepository.getEnglish(anyString())).thenReturn(Optional.empty());
-
-
-        TextMessage returnValue = defaultTextMessageService.replyText("hogehoge");
-
-
-        verify(messageRepository, times(1)).getEnglish("hogehoge");
-        assertThat(returnValue.getText(), equalTo("hogehoge"));
+        Message message = new TextMessage("test");
+        ReplyMessage replyMessage = new ReplyMessage("reply token", message);
+        verify(lineMessagingService, times(1)).replyMessage(replyMessage);
     }
 }

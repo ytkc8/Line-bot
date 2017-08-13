@@ -1,19 +1,27 @@
 package com.example.service;
 
-import com.example.repository.MessageRepository;
+import com.linecorp.bot.client.LineMessagingService;
+import com.linecorp.bot.model.ReplyMessage;
+import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DefaultTextMessageService implements TextMessageService {
-    private MessageRepository messageRepository;
+    private LineMessagingService lineMessagingService;
 
-    public DefaultTextMessageService(MessageRepository messageRepository) {
-        this.messageRepository = messageRepository;
+    public DefaultTextMessageService(LineMessagingService lineMessagingService) {
+        this.lineMessagingService = lineMessagingService;
     }
 
     @Override
-    public TextMessage replyText(String text) {
-        return new TextMessage(messageRepository.getEnglish(text).orElse(text));
+    public void replyText(MessageEvent<TextMessageContent> event) {
+        ReplyMessage replyMessage = new ReplyMessage(
+                event.getReplyToken(),
+                new TextMessage(event.getMessage().getText())
+        );
+
+        lineMessagingService.replyMessage(replyMessage);
     }
 }

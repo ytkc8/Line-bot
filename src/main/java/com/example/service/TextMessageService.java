@@ -1,7 +1,8 @@
 package com.example.service;
 
-import com.linecorp.bot.model.message.TextMessage;
+import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.message.TextMessageContent;
 
 public interface TextMessageService {
-    TextMessage replyText(String text);
+    void replyText(MessageEvent<TextMessageContent> event);
 }

@@ -24,8 +24,6 @@ public class MessageEventHandlerTest {
     @Mock
     private TextMessageService textMessageService;
 
-    private TextMessage textMessage;
-
     @Before
     public void setUp() throws Exception {
         messageEventHandler = new MessageEventHandler(textMessageService);
@@ -33,17 +31,14 @@ public class MessageEventHandlerTest {
 
     @Test
     public void test_handleTextMessageEvent_callsDependeciesWithCorrectArguments() throws Exception {
-        textMessage = new TextMessage("test");
-        when(textMessageService.replyText(anyString())).thenReturn(textMessage);
-
-
         MessageEvent<TextMessageContent> event = new MessageEvent<>(
                 "", null, new TextMessageContent("", "test"), null
         );
-        TextMessage actualTextMessage = messageEventHandler.handleTextMessageEvent(event);
 
 
-        verify(textMessageService, times(1)).replyText("test");
-        assertThat(actualTextMessage, equalTo(textMessage));
+        messageEventHandler.handleTextMessageEvent(event);
+
+
+        verify(textMessageService, times(1)).replyText(event);
     }
 }

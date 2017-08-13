@@ -18,8 +18,8 @@ public class MessageEventHandler {
 	}
 
 	@EventMapping
-	public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
-		return textMessageService.replyText(event.getMessage().getText());
+	public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
+		textMessageService.replyText(event);
 	}
 
 	@EventMapping

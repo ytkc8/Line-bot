@@ -1,18 +1,20 @@
 package com.example.service;
 
-import com.linecorp.bot.client.LineMessagingService;
+import com.example.wrapper.ReplyWrapper;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Service
 public class DefaultTextMessageService implements TextMessageService {
-    private LineMessagingService lineMessagingService;
+    private ReplyWrapper replyWrapper;
 
-    public DefaultTextMessageService(LineMessagingService lineMessagingService) {
-        this.lineMessagingService = lineMessagingService;
+    public DefaultTextMessageService(ReplyWrapper replyWrapper) {
+        this.replyWrapper = replyWrapper;
     }
 
     @Override
@@ -22,6 +24,10 @@ public class DefaultTextMessageService implements TextMessageService {
                 new TextMessage(event.getMessage().getText())
         );
 
-        lineMessagingService.replyMessage(replyMessage);
+        try {
+            replyWrapper.reply(replyMessage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -3,9 +3,11 @@ package com.example.wrapper;
 import com.linecorp.bot.client.LineMessagingService;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.response.BotApiResponse;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@Component
 public class DefaultReplyWrapper implements ReplyWrapper {
     private LineMessagingService lineMessagingService;
 

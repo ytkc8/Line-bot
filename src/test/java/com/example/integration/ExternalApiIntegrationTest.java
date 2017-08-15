@@ -9,6 +9,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static com.example.helper.OpenWeatherMapAPIUriGetter.getUri;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -30,16 +31,8 @@ public class ExternalApiIntegrationTest {
     private TestRestTemplate restTemplate;
 
     @Test
-    public void test_restTemplate() throws Exception {
-        String host = "api.openweathermap.org";
-        String apiPath = "/data/2.5/forecast";
-        String cityParam = "q=Tokyo";
-        String unitParam = "units=Metric";
-        String cntParam = "cnt=1";
-        String apiKey = "appid=3a981d4a71950ac6430af06740e589b2";
-        String uri = "http://" + host + apiPath + "?" +
-                cityParam + "&" + unitParam + "&" + cntParam + "&" + apiKey;
-        OWMResponse forObject = restTemplate.getForObject(uri, OWMResponse.class);
+    public void test_getUri_and_convertObjectFromApiResponse() throws Exception {
+        OWMResponse forObject = restTemplate.getForObject(getUri(), OWMResponse.class);
 
 
         assertThat(forObject, is(notNullValue()));

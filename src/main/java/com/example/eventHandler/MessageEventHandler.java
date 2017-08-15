@@ -11,7 +11,7 @@ import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
 @LineMessageHandler
 public class MessageEventHandler {
-	private TextMessageService textMessageService;
+	private final TextMessageService textMessageService;
 
 	public MessageEventHandler(TextMessageService textMessageService) {
 		this.textMessageService = textMessageService;

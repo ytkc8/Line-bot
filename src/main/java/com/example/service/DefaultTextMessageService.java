@@ -11,8 +11,8 @@ import java.io.IOException;
 
 @Service
 public class DefaultTextMessageService implements TextMessageService {
-    private ReplyWrapper replyWrapper;
-    private SimpleWeatherForcastService simpleWeatherForcastService;
+    private final ReplyWrapper replyWrapper;
+    private final SimpleWeatherForcastService simpleWeatherForcastService;
 
     public DefaultTextMessageService(
             ReplyWrapper replyWrapper,

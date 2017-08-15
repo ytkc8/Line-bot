@@ -9,7 +9,7 @@ import java.io.IOException;
 
 @Component
 public class DefaultReplyWrapper implements ReplyWrapper {
-    private LineMessagingService lineMessagingService;
+    private final LineMessagingService lineMessagingService;
 
     public DefaultReplyWrapper(LineMessagingService lineMessagingService) {
         this.lineMessagingService = lineMessagingService;

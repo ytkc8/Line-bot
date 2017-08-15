@@ -8,7 +8,7 @@ import static com.example.helper.OpenWeatherMapAPIUriGetter.getUri;
 
 @Component
 public class DefaultOpenWeatherMapAPIWrapper implements OpenWeatherMapAPIWrapper {
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     public DefaultOpenWeatherMapAPIWrapper(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;

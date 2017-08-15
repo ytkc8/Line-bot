@@ -4,7 +4,9 @@ import com.example.model.OWMResponse;
 import com.example.model.Weather;
 import com.example.model.WeatherData;
 import com.example.wrapper.OpenWeatherMapAPIWrapper;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SimpleWeatherForcastService implements WeatherForcastService {
     private static final String errorMessage = "Sorry... Can't get weather data";
 

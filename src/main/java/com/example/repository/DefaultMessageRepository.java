@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public class DefaultMessageRepository implements MessageRepository {
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     public DefaultMessageRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

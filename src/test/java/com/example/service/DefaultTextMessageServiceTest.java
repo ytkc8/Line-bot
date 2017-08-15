@@ -14,8 +14,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultTextMessageServiceTest {
@@ -24,24 +23,48 @@ public class DefaultTextMessageServiceTest {
     @Mock
     private ReplyWrapper replyWrapper;
 
+    @Mock
+    private SimpleWeatherForcastService simpleWeatherForcastService;
+
     private MessageEvent<TextMessageContent> event;
+    private Source source;
 
     @Before
     public void setUp() throws Exception {
-        defaultTextMessageService = new DefaultTextMessageService(replyWrapper);
+        defaultTextMessageService = new DefaultTextMessageService(replyWrapper, simpleWeatherForcastService);
 
-        Source source = new UserSource("abcde");
-        TextMessageContent textMessageContent = new TextMessageContent("111", "test");
-        event = new MessageEvent<>("reply token", source, textMessageContent, null);
+        source = new UserSource("abcde");
     }
 
     @Test
-    public void test_replyText_callsDependenciesWithCorrectArguments() throws Exception {
+    public void test_replyText_callsDependencies_whenTextIsNotWeather() throws Exception {
+        TextMessageContent textMessageContent = new TextMessageContent("111", "test");
+        event = new MessageEvent<>("reply token", source, textMessageContent, null);
+
+
         defaultTextMessageService.replyText(event);
 
 
         Message message = new TextMessage("test");
         ReplyMessage replyMessage = new ReplyMessage("reply token", message);
         verify(replyWrapper, times(1)).reply(replyMessage);
+        verify(simpleWeatherForcastService, times(0)).getWeatherForecast();
+    }
+
+    @Test
+    public void test_replyText_callsDependencies_whenTextIsWeather() throws Exception {
+        when(simpleWeatherForcastService.getWeatherForecast()).thenReturn("forecast message");
+        TextMessageContent textMessageContent = new TextMessageContent("111", "天気");
+        event = new MessageEvent<>("reply token", source, textMessageContent, null);
+
+
+        defaultTextMessageService.replyText(event);
+
+
+        Message message = new TextMessage("forecast message");
+        ReplyMessage replyMessage = new ReplyMessage("reply token", message);
+        verify(replyWrapper, times(1)).reply(replyMessage);
+        verify(simpleWeatherForcastService, times(1)).getWeatherForecast();
+
     }
 }

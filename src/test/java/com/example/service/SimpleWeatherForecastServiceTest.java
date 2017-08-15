@@ -19,15 +19,15 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SimpleWeatherForcastServiceTest {
-    private SimpleWeatherForcastService simpleWeatherForcastService;
+public class SimpleWeatherForecastServiceTest {
+    private SimpleWeatherForecastService simpleWeatherForecastService;
     
     @Mock
     private OpenWeatherMapAPIWrapper openWeatherMapAPIWrapper;
     
     @Before
     public void setUp() throws Exception {
-        simpleWeatherForcastService = new SimpleWeatherForcastService(openWeatherMapAPIWrapper);
+        simpleWeatherForecastService = new SimpleWeatherForecastService(openWeatherMapAPIWrapper);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class SimpleWeatherForcastServiceTest {
         when(openWeatherMapAPIWrapper.getWeatherData()).thenReturn(owmResponse);
 
 
-        simpleWeatherForcastService.getWeatherForecast();
+        simpleWeatherForecastService.getWeatherForecast();
 
 
         verify(openWeatherMapAPIWrapper, times(1)).getWeatherData();
@@ -52,7 +52,7 @@ public class SimpleWeatherForcastServiceTest {
         when(openWeatherMapAPIWrapper.getWeatherData()).thenReturn(owmResponse);
 
 
-        String returnValue = simpleWeatherForcastService.getWeatherForecast();
+        String returnValue = simpleWeatherForecastService.getWeatherForecast();
 
 
         assertThat(returnValue, equalTo("傘持って行った方がいいよ"));
@@ -66,7 +66,7 @@ public class SimpleWeatherForcastServiceTest {
         when(openWeatherMapAPIWrapper.getWeatherData()).thenReturn(owmResponse);
 
 
-        String returnValue = simpleWeatherForcastService.getWeatherForecast();
+        String returnValue = simpleWeatherForecastService.getWeatherForecast();
 
 
         assertThat(returnValue, equalTo("多分傘はいらない"));
@@ -78,7 +78,7 @@ public class SimpleWeatherForcastServiceTest {
         when(openWeatherMapAPIWrapper.getWeatherData()).thenReturn(owmResponse);
 
 
-        String returnValue = simpleWeatherForcastService.getWeatherForecast();
+        String returnValue = simpleWeatherForecastService.getWeatherForecast();
 
 
         assertThat(returnValue, equalTo("Sorry... Can't get weather data"));
@@ -91,7 +91,7 @@ public class SimpleWeatherForcastServiceTest {
         when(openWeatherMapAPIWrapper.getWeatherData()).thenReturn(owmResponse);
 
 
-        String returnValue = simpleWeatherForcastService.getWeatherForecast();
+        String returnValue = simpleWeatherForecastService.getWeatherForecast();
 
 
         assertThat(returnValue, equalTo("Sorry... Can't get weather data"));

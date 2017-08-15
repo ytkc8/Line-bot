@@ -7,12 +7,12 @@ import com.example.wrapper.OpenWeatherMapAPIWrapper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SimpleWeatherForcastService implements WeatherForcastService {
+public class SimpleWeatherForecastService implements WeatherForcastService {
     private static final String errorMessage = "Sorry... Can't get weather data";
 
     private final OpenWeatherMapAPIWrapper openWeatherMapAPIWrapper;
 
-    public SimpleWeatherForcastService(OpenWeatherMapAPIWrapper openWeatherMapAPIWrapper) {
+    public SimpleWeatherForecastService(OpenWeatherMapAPIWrapper openWeatherMapAPIWrapper) {
         this.openWeatherMapAPIWrapper = openWeatherMapAPIWrapper;
     }
 

@@ -12,14 +12,14 @@ import java.io.IOException;
 @Service
 public class DefaultTextMessageService implements TextMessageService {
     private final ReplyWrapper replyWrapper;
-    private final SimpleWeatherForcastService simpleWeatherForcastService;
+    private final SimpleWeatherForecastService simpleWeatherForecastService;
 
     public DefaultTextMessageService(
             ReplyWrapper replyWrapper,
-            SimpleWeatherForcastService simpleWeatherForcastService
+            SimpleWeatherForecastService simpleWeatherForecastService
     ) {
         this.replyWrapper = replyWrapper;
-        this.simpleWeatherForcastService = simpleWeatherForcastService;
+        this.simpleWeatherForecastService = simpleWeatherForecastService;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class DefaultTextMessageService implements TextMessageService {
 
     private String getReplyText(String requestText) {
         if (requestText.equals("天気")) {
-            return simpleWeatherForcastService.getWeatherForecast();
+            return simpleWeatherForecastService.getWeatherForecast();
         }
 
         return requestText;

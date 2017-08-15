@@ -5,11 +5,11 @@ import com.example.model.Weather;
 import com.example.model.WeatherData;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
+import static com.example.helper.OpenWeatherMapAPIUriGetter.getUri;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
@@ -31,7 +31,7 @@ public class DefaultOpenWeatherMapAPIWrapperTest {
 
     @Test
     public void test_getWeatherData() throws Exception {
-        mockServer.expect(requestTo("http://api.openweathermap.org/data/2.5/forecast?q=Tokyo&units=Metric&cnt=1&appid=3a981d4a71950ac6430af06740e589b2"))
+        mockServer.expect(requestTo(getUri()))
                 .andRespond(withSuccess("{\"list\": [{\"dt\": \"1406106000\", \"weather\": [{\"main\": \"Rain\", \"description\": \"little rain\"}]}]}", MediaType.APPLICATION_JSON_UTF8));
 
 

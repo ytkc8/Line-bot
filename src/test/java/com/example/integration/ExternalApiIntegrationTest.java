@@ -1,5 +1,6 @@
 package com.example.integration;
 
+import com.example.helper.DefaultOpenWeatherMapAPIUriGetter;
 import com.example.model.OWMResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +10,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static com.example.helper.OpenWeatherMapAPIUriGetter.getUri;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -23,18 +23,24 @@ import static org.junit.Assert.assertThat;
                 "DATABASE_PASSWORD:",
                 "MAIL_HOSTNAME:",
                 "MAIL_USERNAME:",
-                "MAIL_PASSWORD:"
+                "MAIL_PASSWORD:",
+                "OPEN_WEATHER_MAP_API_KEY: 3a981d4a71950ac6430af06740e589b2"
         }
 )
 public class ExternalApiIntegrationTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @Autowired
+    private DefaultOpenWeatherMapAPIUriGetter defaultOpenWeatherMapAPIUriGetter;
+
     @Test
     public void test_getUri_and_convertObjectFromApiResponse() throws Exception {
-        OWMResponse forObject = restTemplate.getForObject(getUri(), OWMResponse.class);
+        String uri = defaultOpenWeatherMapAPIUriGetter.getUri();
+        OWMResponse forObject = restTemplate.getForObject(uri, OWMResponse.class);
 
 
         assertThat(forObject, is(notNullValue()));
+        assertThat(forObject.getList(), is(notNullValue()));
     }
 }

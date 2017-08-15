@@ -1,21 +1,31 @@
 package com.example.wrapper;
 
+import com.example.helper.OpenWeatherMapAPIUriGetter;
 import com.example.model.OWMResponse;
 import com.example.model.Weather;
 import com.example.model.WeatherData;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
-import static com.example.helper.OpenWeatherMapAPIUriGetter.getUri;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
+@RunWith(MockitoJUnitRunner.class)
 public class DefaultOpenWeatherMapAPIWrapperTest {
+    @Mock
+    private OpenWeatherMapAPIUriGetter openWeatherMapAPIUriGetter;
+
     private RestTemplate restTemplate;
 
     private DefaultOpenWeatherMapAPIWrapper defaultOpenWeatherMapAPIWrapper;
@@ -26,12 +36,16 @@ public class DefaultOpenWeatherMapAPIWrapperTest {
     public void setUp() throws Exception {
         restTemplate = new RestTemplate();
         mockServer = MockRestServiceServer.bindTo(restTemplate).build();
-        defaultOpenWeatherMapAPIWrapper = new DefaultOpenWeatherMapAPIWrapper(restTemplate);
+        defaultOpenWeatherMapAPIWrapper = new DefaultOpenWeatherMapAPIWrapper(
+                restTemplate, openWeatherMapAPIUriGetter
+        );
     }
 
     @Test
     public void test_getWeatherData() throws Exception {
-        mockServer.expect(requestTo(getUri()))
+        String uri = "http://api.openweathermap.org/data/2.5/forecast?q=Tokyo&units=Metric&cnt=1&appid=3a981d4a71950ac6430af06740e589b2";
+        when(openWeatherMapAPIUriGetter.getUri()).thenReturn(uri);
+        mockServer.expect(requestTo(uri))
                 .andRespond(withSuccess("{\"list\": [{\"dt\": \"1406106000\", \"weather\": [{\"main\": \"Rain\", \"description\": \"little rain\"}]}]}", MediaType.APPLICATION_JSON_UTF8));
 
 
@@ -45,5 +59,7 @@ public class DefaultOpenWeatherMapAPIWrapperTest {
         assertThat(weather.getDescription(), equalTo("little rain"));
 
         mockServer.verify();
+
+        verify(openWeatherMapAPIUriGetter, times(1)).getUri();
     }
 }

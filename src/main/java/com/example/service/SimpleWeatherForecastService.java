@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SimpleWeatherForecastService implements WeatherForcastService {
-    private static final String errorMessage = "Sorry... Can't get weather data";
+    private static final String errorMessage = "Sorry... Can't get weather data.";
 
     private final OpenWeatherMapAPIWrapper openWeatherMapAPIWrapper;
 
@@ -21,15 +21,20 @@ public class SimpleWeatherForecastService implements WeatherForcastService {
         OWMResponse owmResponse = openWeatherMapAPIWrapper.getWeatherData();
         WeatherData weatherData = getWeatherData(owmResponse);
         if (weatherData == null) {
-            return errorMessage;
+            return errorMessage + " error code: 001";
         }
 
         Weather weather = getWeather(weatherData);
         if (weather == null) {
-            return errorMessage;
+            return errorMessage + " error code: 002";
         }
 
-        if (weather.getMain().equals("Rain")) {
+        String weatherText = weather.getMain();
+        if (weatherText == null) {
+            return errorMessage + " error code: 003";
+        }
+
+        if (weatherText.equals("Rain")) {
             return "傘持って行った方がいいよ";
         } else {
             return "多分傘はいらない";

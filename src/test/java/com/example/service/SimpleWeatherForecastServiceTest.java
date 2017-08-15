@@ -81,7 +81,7 @@ public class SimpleWeatherForecastServiceTest {
         String returnValue = simpleWeatherForecastService.getWeatherForecast();
 
 
-        assertThat(returnValue, equalTo("Sorry... Can't get weather data"));
+        assertThat(returnValue, equalTo("Sorry... Can't get weather data. error code: 001"));
     }
 
     @Test
@@ -94,6 +94,20 @@ public class SimpleWeatherForecastServiceTest {
         String returnValue = simpleWeatherForecastService.getWeatherForecast();
 
 
-        assertThat(returnValue, equalTo("Sorry... Can't get weather data"));
+        assertThat(returnValue, equalTo("Sorry... Can't get weather data. error code: 002"));
+    }
+
+    @Test
+    public void test_getWeatherForecast_returnsForecast_whenThereIsNoMain() throws Exception {
+        Weather mainNull = new Weather(null, "some cloud");
+        WeatherData weatherData = new WeatherData("11111111", singletonList(mainNull));
+        OWMResponse owmResponse = new OWMResponse(singletonList(weatherData));
+        when(openWeatherMapAPIWrapper.getWeatherData()).thenReturn(owmResponse);
+
+
+        String returnValue = simpleWeatherForecastService.getWeatherForecast();
+
+
+        assertThat(returnValue, equalTo("Sorry... Can't get weather data. error code: 003"));
     }
 }

@@ -9,8 +9,9 @@ import java.io.IOException;
 
 @Service
 public class DefaultPushMessageService implements PushMessageService {
-    private PushWrapper pushWrapper;
-    private SimpleWeatherForecastService simpleWeatherForecastService;
+    public static final String userId = "U4770190ff20ae9f5f1b5a83cef491c02";
+    private final PushWrapper pushWrapper;
+    private final SimpleWeatherForecastService simpleWeatherForecastService;
 
     public DefaultPushMessageService(
             PushWrapper pushWrapper,
@@ -22,7 +23,6 @@ public class DefaultPushMessageService implements PushMessageService {
 
     @Override
     public void pushText() {
-        System.out.println("Hello!!!");
         try {
             pushWrapper.push(generatePushMessage());
         } catch (IOException e) {
@@ -32,7 +32,7 @@ public class DefaultPushMessageService implements PushMessageService {
 
     private PushMessage generatePushMessage() {
         return new PushMessage(
-                "ABC",
+                userId,
                 new TextMessage(getForecast())
         );
     }

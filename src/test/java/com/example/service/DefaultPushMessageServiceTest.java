@@ -41,7 +41,10 @@ public class DefaultPushMessageServiceTest {
 
 
         Message message = new TextMessage("test forecast");
-        PushMessage pushMessage = new PushMessage("ABC", message);
+        PushMessage pushMessage = new PushMessage(
+                "U4770190ff20ae9f5f1b5a83cef491c02",
+                message
+        );
         verify(pushWrapper, times(1)).push(pushMessage);
         verify(simpleWeatherForecastService, times(1)).getWeatherForecast();
     }

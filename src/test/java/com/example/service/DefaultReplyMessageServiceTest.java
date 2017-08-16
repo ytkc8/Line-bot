@@ -17,8 +17,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DefaultTextMessageServiceTest {
-    private DefaultTextMessageService defaultTextMessageService;
+public class DefaultReplyMessageServiceTest {
+    private DefaultReplyMessageService defaultTextMessageService;
 
     @Mock
     private ReplyWrapper replyWrapper;
@@ -31,7 +31,7 @@ public class DefaultTextMessageServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        defaultTextMessageService = new DefaultTextMessageService(replyWrapper, simpleWeatherForecastService);
+        defaultTextMessageService = new DefaultReplyMessageService(replyWrapper, simpleWeatherForecastService);
 
         source = new UserSource("abcde");
     }
@@ -65,6 +65,5 @@ public class DefaultTextMessageServiceTest {
         ReplyMessage replyMessage = new ReplyMessage("reply token", message);
         verify(replyWrapper, times(1)).reply(replyMessage);
         verify(simpleWeatherForecastService, times(1)).getWeatherForecast();
-
     }
 }

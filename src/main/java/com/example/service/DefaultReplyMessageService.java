@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-public class DefaultTextMessageService implements TextMessageService {
+public class DefaultReplyMessageService implements ReplyMessageService {
     private final ReplyWrapper replyWrapper;
     private final SimpleWeatherForecastService simpleWeatherForecastService;
 
-    public DefaultTextMessageService(
+    public DefaultReplyMessageService(
             ReplyWrapper replyWrapper,
             SimpleWeatherForecastService simpleWeatherForecastService
     ) {

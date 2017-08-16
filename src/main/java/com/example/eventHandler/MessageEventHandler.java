@@ -1,6 +1,6 @@
 package com.example.eventHandler;
 
-import com.example.service.TextMessageService;
+import com.example.service.ReplyMessageService;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.FollowEvent;
 import com.linecorp.bot.model.event.MessageEvent;
@@ -11,15 +11,15 @@ import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
 @LineMessageHandler
 public class MessageEventHandler {
-	private final TextMessageService textMessageService;
+	private final ReplyMessageService replyMessageService;
 
-	public MessageEventHandler(TextMessageService textMessageService) {
-		this.textMessageService = textMessageService;
+	public MessageEventHandler(ReplyMessageService replyMessageService) {
+		this.replyMessageService = replyMessageService;
 	}
 
 	@EventMapping
 	public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
-		textMessageService.replyText(event);
+		replyMessageService.replyText(event);
 	}
 
 	@EventMapping

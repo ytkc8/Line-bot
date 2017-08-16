@@ -1,6 +1,6 @@
 package com.example.eventHandler;
 
-import com.example.service.TextMessageService;
+import com.example.service.ReplyMessageService;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import org.junit.Before;
@@ -17,11 +17,11 @@ public class MessageEventHandlerTest {
     private MessageEventHandler messageEventHandler;
 
     @Mock
-    private TextMessageService textMessageService;
+    private ReplyMessageService replyMessageService;
 
     @Before
     public void setUp() throws Exception {
-        messageEventHandler = new MessageEventHandler(textMessageService);
+        messageEventHandler = new MessageEventHandler(replyMessageService);
     }
 
     @Test
@@ -34,6 +34,6 @@ public class MessageEventHandlerTest {
         messageEventHandler.handleTextMessageEvent(event);
 
 
-        verify(textMessageService, times(1)).replyText(event);
+        verify(replyMessageService, times(1)).replyText(event);
     }
 }

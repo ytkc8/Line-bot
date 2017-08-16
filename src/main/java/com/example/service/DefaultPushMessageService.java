@@ -1,8 +1,6 @@
 package com.example.service;
 
 import com.example.wrapper.PushWrapper;
-import com.linecorp.bot.model.event.MessageEvent;
-import com.linecorp.bot.model.event.message.TextMessageContent;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,7 +12,7 @@ public class DefaultPushMessageService implements PushMessageService {
     }
 
     @Override
-    public void pushText(MessageEvent<TextMessageContent> event) {
+    public void pushText() {
 
     }
 }

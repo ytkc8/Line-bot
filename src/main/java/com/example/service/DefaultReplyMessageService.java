@@ -24,6 +24,7 @@ public class DefaultReplyMessageService implements ReplyMessageService {
 
     @Override
     public void replyText(MessageEvent<TextMessageContent> event) {
+        printUserId(event);
         try {
             replyWrapper.reply(getReplyMessage(event));
         } catch (IOException e) {
@@ -44,5 +45,9 @@ public class DefaultReplyMessageService implements ReplyMessageService {
         }
 
         return requestText;
+    }
+
+    private void printUserId(MessageEvent<TextMessageContent> event) {
+        System.out.println("event.getSource().getUserId() = " + event.getSource().getUserId());
     }
 }

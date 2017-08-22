@@ -38,6 +38,52 @@ public class SimpleWeatherForecastServiceTest {
         when(openWeatherMapAPIWrapper.get()).thenReturn(openWeatherMapResponse);
 
 
+        simpleWeatherForecastService.getWeatherForecast();
+
+
+        verify(openWeatherMapAPIWrapper, times(1)).get();
+    }
+
+    @Test
+    public void test_getWeatherForecast_returnsWeatherForecast_onSuccess() throws Exception {
+        Weather weather = new Weather("Cloud", "some cloud.");
+        WeatherData weatherData = new WeatherData("", singletonList(weather));
+        OpenWeatherMapResponse openWeatherMapResponse = new OpenWeatherMapResponse(singletonList(weatherData));
+        when(openWeatherMapAPIWrapper.get()).thenReturn(openWeatherMapResponse);
+
+
+        String weatherForecast = simpleWeatherForecastService.getWeatherForecast();
+
+
+        String expectedText =
+                "Main: Cloud" +
+                "\n\n" +
+                "Description: some cloud.";
+        assertThat(weatherForecast, equalTo(expectedText));
+    }
+
+    @Test
+    public void test_getWeatherForecast_returnsWeatherForecast_onFailure() throws Exception {
+        Weather weather = new Weather(null, "some cloud.");
+        WeatherData weatherData = new WeatherData("", singletonList(weather));
+        OpenWeatherMapResponse openWeatherMapResponse = new OpenWeatherMapResponse(singletonList(weatherData));
+        when(openWeatherMapAPIWrapper.get()).thenReturn(openWeatherMapResponse);
+
+
+        String weatherForecast = simpleWeatherForecastService.getWeatherForecast();
+
+
+        assertThat(weatherForecast, equalTo("Sorry... Can't get weather data."));
+    }
+
+    @Test
+    public void test_getWeatherForecastSummary_callsDependencies() throws Exception {
+        Weather weather = new Weather("", "");
+        WeatherData weatherData = new WeatherData("", singletonList(weather));
+        OpenWeatherMapResponse openWeatherMapResponse = new OpenWeatherMapResponse(singletonList(weatherData));
+        when(openWeatherMapAPIWrapper.get()).thenReturn(openWeatherMapResponse);
+
+
         simpleWeatherForecastService.getWeatherForecastSummary();
 
 
@@ -45,7 +91,7 @@ public class SimpleWeatherForecastServiceTest {
     }
 
     @Test
-    public void test_getWeatherForecast_returnsForecast_whenWeatherIsRain() throws Exception {
+    public void test_getWeatherForecastSummary_returnsForecast_whenWeatherIsRain() throws Exception {
         Weather rain = new Weather("Rain", "little rain");
         WeatherData weatherData = new WeatherData("11111111", singletonList(rain));
         OpenWeatherMapResponse openWeatherMapResponse = new OpenWeatherMapResponse(singletonList(weatherData));
@@ -59,7 +105,7 @@ public class SimpleWeatherForecastServiceTest {
     }
 
     @Test
-    public void test_getWeatherForecast_returnsForecast_whenWeatherIsNotRain() throws Exception {
+    public void test_getWeatherForecastSummary_returnsForecast_whenWeatherIsNotRain() throws Exception {
         Weather rain = new Weather("Cloud", "some cloud");
         WeatherData weatherData = new WeatherData("11111111", singletonList(rain));
         OpenWeatherMapResponse openWeatherMapResponse = new OpenWeatherMapResponse(singletonList(weatherData));
@@ -73,7 +119,7 @@ public class SimpleWeatherForecastServiceTest {
     }
 
     @Test
-    public void test_getWeatherForecast_returnsForecast_whenThereIsNoWeatherData() throws Exception {
+    public void test_getWeatherForecastSummary_returnsForecast_whenThereIsNoWeatherData() throws Exception {
         OpenWeatherMapResponse openWeatherMapResponse = new OpenWeatherMapResponse(emptyList());
         when(openWeatherMapAPIWrapper.get()).thenReturn(openWeatherMapResponse);
 
@@ -81,11 +127,11 @@ public class SimpleWeatherForecastServiceTest {
         String returnValue = simpleWeatherForecastService.getWeatherForecastSummary();
 
 
-        assertThat(returnValue, equalTo("Sorry... Can't get weather data. error code: 001"));
+        assertThat(returnValue, equalTo("Sorry... Can't get weather data."));
     }
 
     @Test
-    public void test_getWeatherForecast_returnsForecast_whenThereIsNoWeather() throws Exception {
+    public void test_getWeatherForecastSummary_returnsForecast_whenThereIsNoWeather() throws Exception {
         WeatherData weatherData = new WeatherData("11111111", emptyList());
         OpenWeatherMapResponse openWeatherMapResponse = new OpenWeatherMapResponse(singletonList(weatherData));
         when(openWeatherMapAPIWrapper.get()).thenReturn(openWeatherMapResponse);
@@ -94,11 +140,11 @@ public class SimpleWeatherForecastServiceTest {
         String returnValue = simpleWeatherForecastService.getWeatherForecastSummary();
 
 
-        assertThat(returnValue, equalTo("Sorry... Can't get weather data. error code: 002"));
+        assertThat(returnValue, equalTo("Sorry... Can't get weather data."));
     }
 
     @Test
-    public void test_getWeatherForecast_returnsForecast_whenThereIsNoMain() throws Exception {
+    public void test_getWeatherForecastSummary_returnsForecast_whenThereIsNoMain() throws Exception {
         Weather mainNull = new Weather(null, "some cloud");
         WeatherData weatherData = new WeatherData("11111111", singletonList(mainNull));
         OpenWeatherMapResponse openWeatherMapResponse = new OpenWeatherMapResponse(singletonList(weatherData));
@@ -108,6 +154,6 @@ public class SimpleWeatherForecastServiceTest {
         String returnValue = simpleWeatherForecastService.getWeatherForecastSummary();
 
 
-        assertThat(returnValue, equalTo("Sorry... Can't get weather data. error code: 003"));
+        assertThat(returnValue, equalTo("Sorry... Can't get weather data."));
     }
 }

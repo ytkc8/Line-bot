@@ -6,6 +6,8 @@ import com.example.model.WeatherData;
 import com.example.wrapper.OpenWeatherMapAPIWrapper;
 import org.springframework.stereotype.Service;
 
+import static java.util.Collections.emptyList;
+
 @Service
 public class SimpleWeatherForecastService implements WeatherForcastService {
     private static final String errorMessage = "Sorry... Can't get weather data.";
@@ -17,41 +19,51 @@ public class SimpleWeatherForecastService implements WeatherForcastService {
     }
 
     @Override
+    public String getWeatherForecast() {
+        Weather weather = getWeather(openWeatherMapAPIWrapper.get());
+        String main = weather.getMain();
+        if (main.equals("empty")) {
+            return errorMessage;
+        }
+
+        String description = weather.getDescription();
+
+        return "Main: " + main +
+                "\n\n" +
+                "Description: " + description;
+    }
+
+    @Override
     public String getWeatherForecastSummary() {
-        OpenWeatherMapResponse openWeatherMapResponse = openWeatherMapAPIWrapper.get();
-        WeatherData weatherData = getWeatherData(openWeatherMapResponse);
-        if (weatherData == null) {
-            return errorMessage + " error code: 001";
-        }
+        Weather weather = getWeather(openWeatherMapAPIWrapper.get());
+        String main = weather.getMain();
 
-        Weather weather = getWeather(weatherData);
-        if (weather == null) {
-            return errorMessage + " error code: 002";
+        switch (main) {
+            case "empty":
+                return errorMessage;
+            case "Rain":
+                return "傘持って行った方がいいよ";
+            default:
+                return "多分傘はいらない";
         }
+    }
 
-        String weatherText = weather.getMain();
-        if (weatherText == null) {
-            return errorMessage + " error code: 003";
-        }
-
-        if (weatherText.equals("Rain")) {
-            return "傘持って行った方がいいよ";
-        } else {
-            return "多分傘はいらない";
-        }
+    private Weather getWeather(OpenWeatherMapResponse openWeatherMapResponse) {
+        return getWeather(getWeatherData(openWeatherMapResponse));
     }
 
     private WeatherData getWeatherData(OpenWeatherMapResponse openWeatherMapResponse) {
         return openWeatherMapResponse.getList()
                 .stream()
                 .findFirst()
-                .orElse(null);
+                .orElse(new WeatherData("", emptyList()));
     }
 
     private Weather getWeather(WeatherData weatherData) {
         return weatherData.getWeather()
                 .stream()
+                .filter(weather -> weather.getMain() != null)
                 .findFirst()
-                .orElse(null);
+                .orElse(new Weather("empty", ""));
     }
 }

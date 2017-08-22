@@ -49,7 +49,7 @@ public class DefaultOpenWeatherMapAPIWrapperTest {
                 .andRespond(withSuccess("{\"list\": [{\"dt\": \"1406106000\", \"weather\": [{\"main\": \"Rain\", \"description\": \"little rain\"}]}]}", MediaType.APPLICATION_JSON_UTF8));
 
 
-        OpenWeatherMapResponse openWeatherMapResponse = defaultOpenWeatherMapAPIWrapper.getWeatherData();
+        OpenWeatherMapResponse openWeatherMapResponse = defaultOpenWeatherMapAPIWrapper.get();
 
 
         WeatherData weatherData = openWeatherMapResponse.getList().get(0);

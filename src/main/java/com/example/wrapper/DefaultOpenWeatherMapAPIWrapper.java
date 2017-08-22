@@ -19,7 +19,7 @@ public class DefaultOpenWeatherMapAPIWrapper implements OpenWeatherMapAPIWrapper
     }
 
     @Override
-    public OpenWeatherMapResponse getWeatherData() {
+    public OpenWeatherMapResponse get() {
         return restTemplate.getForObject(
                 APIUriGetter.getUri(),
                 OpenWeatherMapResponse.class

@@ -18,7 +18,7 @@ public class SimpleWeatherForecastService implements WeatherForcastService {
 
     @Override
     public String getWeatherForecast() {
-        OpenWeatherMapResponse openWeatherMapResponse = openWeatherMapAPIWrapper.getWeatherData();
+        OpenWeatherMapResponse openWeatherMapResponse = openWeatherMapAPIWrapper.get();
         WeatherData weatherData = getWeatherData(openWeatherMapResponse);
         if (weatherData == null) {
             return errorMessage + " error code: 001";

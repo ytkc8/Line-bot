@@ -1,6 +1,6 @@
 package com.example.wrapper;
 
-import com.example.helper.OpenWeatherMapAPIUriGetter;
+import com.example.helper.APIUriGetter;
 import com.example.model.OWMResponse;
 import com.example.model.Weather;
 import com.example.model.WeatherData;
@@ -24,7 +24,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultOpenWeatherMapAPIWrapperTest {
     @Mock
-    private OpenWeatherMapAPIUriGetter openWeatherMapAPIUriGetter;
+    private APIUriGetter APIUriGetter;
 
     private RestTemplate restTemplate;
 
@@ -37,14 +37,14 @@ public class DefaultOpenWeatherMapAPIWrapperTest {
         restTemplate = new RestTemplate();
         mockServer = MockRestServiceServer.bindTo(restTemplate).build();
         defaultOpenWeatherMapAPIWrapper = new DefaultOpenWeatherMapAPIWrapper(
-                restTemplate, openWeatherMapAPIUriGetter
+                restTemplate, APIUriGetter
         );
     }
 
     @Test
     public void test_getWeatherData() throws Exception {
         String uri = "http://api.openweathermap.org/data/2.5/forecast?q=Tokyo&units=Metric&cnt=1&appid=3a981d4a71950ac6430af06740e589b2";
-        when(openWeatherMapAPIUriGetter.getUri()).thenReturn(uri);
+        when(APIUriGetter.getUri()).thenReturn(uri);
         mockServer.expect(requestTo(uri))
                 .andRespond(withSuccess("{\"list\": [{\"dt\": \"1406106000\", \"weather\": [{\"main\": \"Rain\", \"description\": \"little rain\"}]}]}", MediaType.APPLICATION_JSON_UTF8));
 
@@ -60,6 +60,6 @@ public class DefaultOpenWeatherMapAPIWrapperTest {
 
         mockServer.verify();
 
-        verify(openWeatherMapAPIUriGetter, times(1)).getUri();
+        verify(APIUriGetter, times(1)).getUri();
     }
 }

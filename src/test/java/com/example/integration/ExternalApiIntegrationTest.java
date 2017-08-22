@@ -1,6 +1,6 @@
 package com.example.integration;
 
-import com.example.helper.DefaultOpenWeatherMapAPIUriGetter;
+import com.example.helper.OpenWeatherMapAPIUriGetter;
 import com.example.model.OWMResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +32,7 @@ public class ExternalApiIntegrationTest {
     private TestRestTemplate restTemplate;
 
     @Autowired
-    private DefaultOpenWeatherMapAPIUriGetter defaultOpenWeatherMapAPIUriGetter;
+    private OpenWeatherMapAPIUriGetter defaultOpenWeatherMapAPIUriGetter;
 
     @Test
     public void test_getUri_and_convertObjectFromApiResponse() throws Exception {

@@ -10,9 +10,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import java.util.List;
+
+import static java.util.Arrays.asList;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class WeatherPushMessageServiceTest {
@@ -34,18 +35,22 @@ public class WeatherPushMessageServiceTest {
 
     @Test
     public void test_pushText_callsDependencies() throws Exception {
-        when(simpleWeatherForecastService.getWeatherForecastSummary()).thenReturn("test forecast");
+        when(simpleWeatherForecastService.getWeatherForecastSummary()).thenReturn("test summary forecast");
+        when(simpleWeatherForecastService.getWeatherForecast()).thenReturn("test detail forecast");
 
 
         weatherPushMessageService.pushText();
 
 
-        Message message = new TextMessage("test forecast");
+        Message summaryMessage = new TextMessage("test summary forecast");
+        Message detailMessage = new TextMessage("test detail forecast");
+        List<Message> messages = asList(summaryMessage, detailMessage);
         PushMessage pushMessage = new PushMessage(
                 "U4770190ff20ae9f5f1b5a83cef491c02",
-                message
+                messages
         );
         verify(pushWrapper, times(1)).push(pushMessage);
         verify(simpleWeatherForecastService, times(1)).getWeatherForecastSummary();
+        verify(simpleWeatherForecastService, times(1)).getWeatherForecast();
     }
 }

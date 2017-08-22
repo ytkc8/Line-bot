@@ -43,7 +43,7 @@ public class WeatherReplyMessageServiceTest {
     }
 
     @Test
-    public void test_replyText_callsDependencies_whenTextIsWeather() throws Exception {
+    public void test_replyText_callsDependencies() throws Exception {
         when(simpleWeatherForecastService.getWeatherForecastSummary()).thenReturn("forecast summary message");
         when(simpleWeatherForecastService.getWeatherForecast()).thenReturn("forecast detail message");
         TextMessageContent textMessageContent = new TextMessageContent("111", "天気");

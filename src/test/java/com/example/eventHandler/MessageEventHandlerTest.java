@@ -9,23 +9,31 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Map;
+
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MessageEventHandlerTest {
     private MessageEventHandler messageEventHandler;
 
     @Mock
+    private Map<String, ReplyMessageService> replyMessageServiceMap;
+
+    @Mock
     private ReplyMessageService replyMessageService;
 
     @Before
     public void setUp() throws Exception {
-        messageEventHandler = new MessageEventHandler(replyMessageService);
+        messageEventHandler = new MessageEventHandler(replyMessageServiceMap);
     }
 
     @Test
     public void test_handleTextMessageEvent_callsDependeciesWithCorrectArguments() throws Exception {
+        when(replyMessageServiceMap.get(anyString())).thenReturn(replyMessageService);
         MessageEvent<TextMessageContent> event = new MessageEvent<>(
                 "", null, new TextMessageContent("", "test"), null
         );

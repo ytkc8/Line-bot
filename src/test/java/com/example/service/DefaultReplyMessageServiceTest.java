@@ -23,21 +23,18 @@ public class DefaultReplyMessageServiceTest {
     @Mock
     private ReplyWrapper replyWrapper;
 
-    @Mock
-    private SimpleWeatherForecastService simpleWeatherForecastService;
-
     private MessageEvent<TextMessageContent> event;
     private Source source;
 
     @Before
     public void setUp() throws Exception {
-        defaultTextMessageService = new DefaultReplyMessageService(replyWrapper, simpleWeatherForecastService);
+        defaultTextMessageService = new DefaultReplyMessageService(replyWrapper);
 
         source = new UserSource("abcde");
     }
 
     @Test
-    public void test_replyText_callsDependencies_whenTextIsNotWeather() throws Exception {
+    public void test_replyText_callsDependencies() throws Exception {
         TextMessageContent textMessageContent = new TextMessageContent("111", "test");
         event = new MessageEvent<>("reply token", source, textMessageContent, null);
 
@@ -48,22 +45,5 @@ public class DefaultReplyMessageServiceTest {
         Message message = new TextMessage("test");
         ReplyMessage replyMessage = new ReplyMessage("reply token", message);
         verify(replyWrapper, times(1)).reply(replyMessage);
-        verify(simpleWeatherForecastService, times(0)).getWeatherForecastSummary();
-    }
-
-    @Test
-    public void test_replyText_callsDependencies_whenTextIsWeather() throws Exception {
-        when(simpleWeatherForecastService.getWeatherForecastSummary()).thenReturn("forecast message");
-        TextMessageContent textMessageContent = new TextMessageContent("111", "天気");
-        event = new MessageEvent<>("reply token", source, textMessageContent, null);
-
-
-        defaultTextMessageService.replyText(event);
-
-
-        Message message = new TextMessage("forecast message");
-        ReplyMessage replyMessage = new ReplyMessage("reply token", message);
-        verify(replyWrapper, times(1)).reply(replyMessage);
-        verify(simpleWeatherForecastService, times(1)).getWeatherForecastSummary();
     }
 }

@@ -9,16 +9,24 @@ import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
+import java.util.Map;
+
 @LineMessageHandler
 public class MessageEventHandler {
-	private final ReplyMessageService replyMessageService;
+	private final Map<String, ReplyMessageService> replyMessageServiceMap;
 
-	public MessageEventHandler(ReplyMessageService replyMessageService) {
-		this.replyMessageService = replyMessageService;
+	public MessageEventHandler(Map<String, ReplyMessageService> replyMessageServiceMap) {
+		this.replyMessageServiceMap = replyMessageServiceMap;
 	}
 
 	@EventMapping
 	public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
+		// todo: this logic is not tested
+		String key = "default";
+		if ("天気".equals(event.getMessage().getText())) {
+			key = "weather";
+		}
+		ReplyMessageService replyMessageService = replyMessageServiceMap.get(key);
 		replyMessageService.replyText(event);
 	}
 

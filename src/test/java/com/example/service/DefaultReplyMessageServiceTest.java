@@ -48,12 +48,12 @@ public class DefaultReplyMessageServiceTest {
         Message message = new TextMessage("test");
         ReplyMessage replyMessage = new ReplyMessage("reply token", message);
         verify(replyWrapper, times(1)).reply(replyMessage);
-        verify(simpleWeatherForecastService, times(0)).getWeatherForecast();
+        verify(simpleWeatherForecastService, times(0)).getWeatherForecastSummary();
     }
 
     @Test
     public void test_replyText_callsDependencies_whenTextIsWeather() throws Exception {
-        when(simpleWeatherForecastService.getWeatherForecast()).thenReturn("forecast message");
+        when(simpleWeatherForecastService.getWeatherForecastSummary()).thenReturn("forecast message");
         TextMessageContent textMessageContent = new TextMessageContent("111", "天気");
         event = new MessageEvent<>("reply token", source, textMessageContent, null);
 
@@ -64,6 +64,6 @@ public class DefaultReplyMessageServiceTest {
         Message message = new TextMessage("forecast message");
         ReplyMessage replyMessage = new ReplyMessage("reply token", message);
         verify(replyWrapper, times(1)).reply(replyMessage);
-        verify(simpleWeatherForecastService, times(1)).getWeatherForecast();
+        verify(simpleWeatherForecastService, times(1)).getWeatherForecastSummary();
     }
 }

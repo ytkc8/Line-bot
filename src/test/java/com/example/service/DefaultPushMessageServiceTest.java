@@ -34,7 +34,7 @@ public class DefaultPushMessageServiceTest {
 
     @Test
     public void test_pushText_callsDependencies() throws Exception {
-        when(simpleWeatherForecastService.getWeatherForecast()).thenReturn("test forecast");
+        when(simpleWeatherForecastService.getWeatherForecastSummary()).thenReturn("test forecast");
 
 
         defaultPushMessageService.pushText();
@@ -46,6 +46,6 @@ public class DefaultPushMessageServiceTest {
                 message
         );
         verify(pushWrapper, times(1)).push(pushMessage);
-        verify(simpleWeatherForecastService, times(1)).getWeatherForecast();
+        verify(simpleWeatherForecastService, times(1)).getWeatherForecastSummary();
     }
 }

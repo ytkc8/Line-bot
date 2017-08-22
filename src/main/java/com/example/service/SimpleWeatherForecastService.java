@@ -17,7 +17,7 @@ public class SimpleWeatherForecastService implements WeatherForcastService {
     }
 
     @Override
-    public String getWeatherForecast() {
+    public String getWeatherForecastSummary() {
         OpenWeatherMapResponse openWeatherMapResponse = openWeatherMapAPIWrapper.get();
         WeatherData weatherData = getWeatherData(openWeatherMapResponse);
         if (weatherData == null) {

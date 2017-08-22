@@ -38,6 +38,6 @@ public class DefaultPushMessageService implements PushMessageService {
     }
 
     private String getForecast() {
-        return simpleWeatherForecastService.getWeatherForecast();
+        return simpleWeatherForecastService.getWeatherForecastSummary();
     }
 }

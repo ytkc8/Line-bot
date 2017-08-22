@@ -41,13 +41,13 @@ public class DefaultReplyMessageService implements ReplyMessageService {
 
     private String getReplyText(String requestText) {
         if (requestText.equals("天気")) {
-            return simpleWeatherForecastService.getWeatherForecast();
+            return simpleWeatherForecastService.getWeatherForecastSummary();
         }
 
         return requestText;
     }
 
     private void printUserId(MessageEvent<TextMessageContent> event) {
-        System.out.println("event.getSource().getUserId() = " + event.getSource().getUserId());
+        System.out.println("\n\nevent.getSource().getUserId() = " + event.getSource().getUserId() + "\n\n");
     }
 }

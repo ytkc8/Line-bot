@@ -38,7 +38,7 @@ public class SimpleWeatherForecastServiceTest {
         when(openWeatherMapAPIWrapper.get()).thenReturn(openWeatherMapResponse);
 
 
-        simpleWeatherForecastService.getWeatherForecast();
+        simpleWeatherForecastService.getWeatherForecastSummary();
 
 
         verify(openWeatherMapAPIWrapper, times(1)).get();
@@ -52,7 +52,7 @@ public class SimpleWeatherForecastServiceTest {
         when(openWeatherMapAPIWrapper.get()).thenReturn(openWeatherMapResponse);
 
 
-        String returnValue = simpleWeatherForecastService.getWeatherForecast();
+        String returnValue = simpleWeatherForecastService.getWeatherForecastSummary();
 
 
         assertThat(returnValue, equalTo("傘持って行った方がいいよ"));
@@ -66,7 +66,7 @@ public class SimpleWeatherForecastServiceTest {
         when(openWeatherMapAPIWrapper.get()).thenReturn(openWeatherMapResponse);
 
 
-        String returnValue = simpleWeatherForecastService.getWeatherForecast();
+        String returnValue = simpleWeatherForecastService.getWeatherForecastSummary();
 
 
         assertThat(returnValue, equalTo("多分傘はいらない"));
@@ -78,7 +78,7 @@ public class SimpleWeatherForecastServiceTest {
         when(openWeatherMapAPIWrapper.get()).thenReturn(openWeatherMapResponse);
 
 
-        String returnValue = simpleWeatherForecastService.getWeatherForecast();
+        String returnValue = simpleWeatherForecastService.getWeatherForecastSummary();
 
 
         assertThat(returnValue, equalTo("Sorry... Can't get weather data. error code: 001"));
@@ -91,7 +91,7 @@ public class SimpleWeatherForecastServiceTest {
         when(openWeatherMapAPIWrapper.get()).thenReturn(openWeatherMapResponse);
 
 
-        String returnValue = simpleWeatherForecastService.getWeatherForecast();
+        String returnValue = simpleWeatherForecastService.getWeatherForecastSummary();
 
 
         assertThat(returnValue, equalTo("Sorry... Can't get weather data. error code: 002"));
@@ -105,7 +105,7 @@ public class SimpleWeatherForecastServiceTest {
         when(openWeatherMapAPIWrapper.get()).thenReturn(openWeatherMapResponse);
 
 
-        String returnValue = simpleWeatherForecastService.getWeatherForecast();
+        String returnValue = simpleWeatherForecastService.getWeatherForecastSummary();
 
 
         assertThat(returnValue, equalTo("Sorry... Can't get weather data. error code: 003"));

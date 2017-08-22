@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-public class DefaultPushMessageService implements PushMessageService {
+public class WeatherPushMessageService implements PushMessageService {
     public static final String userId = "U4770190ff20ae9f5f1b5a83cef491c02";
     private final PushWrapper pushWrapper;
     private final SimpleWeatherForecastService simpleWeatherForecastService;
 
-    public DefaultPushMessageService(
+    public WeatherPushMessageService(
             PushWrapper pushWrapper,
             SimpleWeatherForecastService simpleWeatherForecastService
     ) {

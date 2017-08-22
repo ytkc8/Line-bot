@@ -15,8 +15,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DefaultPushMessageServiceTest {
-    private DefaultPushMessageService defaultPushMessageService;
+public class WeatherPushMessageServiceTest {
+    private WeatherPushMessageService weatherPushMessageService;
 
     @Mock
     private PushWrapper pushWrapper;
@@ -26,7 +26,7 @@ public class DefaultPushMessageServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        defaultPushMessageService = new DefaultPushMessageService(
+        weatherPushMessageService = new WeatherPushMessageService(
                 pushWrapper,
                 simpleWeatherForecastService
         );
@@ -37,7 +37,7 @@ public class DefaultPushMessageServiceTest {
         when(simpleWeatherForecastService.getWeatherForecastSummary()).thenReturn("test forecast");
 
 
-        defaultPushMessageService.pushText();
+        weatherPushMessageService.pushText();
 
 
         Message message = new TextMessage("test forecast");

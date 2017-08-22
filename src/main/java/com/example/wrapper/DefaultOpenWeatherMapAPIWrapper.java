@@ -1,7 +1,7 @@
 package com.example.wrapper;
 
 import com.example.helper.APIUriGetter;
-import com.example.model.OWMResponse;
+import com.example.model.OpenWeatherMapResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,10 +19,10 @@ public class DefaultOpenWeatherMapAPIWrapper implements OpenWeatherMapAPIWrapper
     }
 
     @Override
-    public OWMResponse getWeatherData() {
+    public OpenWeatherMapResponse getWeatherData() {
         return restTemplate.getForObject(
                 APIUriGetter.getUri(),
-                OWMResponse.class
+                OpenWeatherMapResponse.class
         );
     }
 }

@@ -1,7 +1,7 @@
 package com.example.integration;
 
 import com.example.helper.OpenWeatherMapAPIUriGetter;
-import com.example.model.OWMResponse;
+import com.example.model.OpenWeatherMapResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class ExternalApiIntegrationTest {
     @Test
     public void test_getUri_and_convertObjectFromApiResponse() throws Exception {
         String uri = defaultOpenWeatherMapAPIUriGetter.getUri();
-        OWMResponse forObject = restTemplate.getForObject(uri, OWMResponse.class);
+        OpenWeatherMapResponse forObject = restTemplate.getForObject(uri, OpenWeatherMapResponse.class);
 
 
         assertThat(forObject, is(notNullValue()));

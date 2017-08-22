@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.model.OWMResponse;
+import com.example.model.OpenWeatherMapResponse;
 import com.example.model.Weather;
 import com.example.model.WeatherData;
 import com.example.wrapper.OpenWeatherMapAPIWrapper;
@@ -34,8 +34,8 @@ public class SimpleWeatherForecastServiceTest {
     public void test_getWeatherForecast_callsDependencies() throws Exception {
         Weather weather = new Weather("", "");
         WeatherData weatherData = new WeatherData("", singletonList(weather));
-        OWMResponse owmResponse = new OWMResponse(singletonList(weatherData));
-        when(openWeatherMapAPIWrapper.getWeatherData()).thenReturn(owmResponse);
+        OpenWeatherMapResponse openWeatherMapResponse = new OpenWeatherMapResponse(singletonList(weatherData));
+        when(openWeatherMapAPIWrapper.getWeatherData()).thenReturn(openWeatherMapResponse);
 
 
         simpleWeatherForecastService.getWeatherForecast();
@@ -48,8 +48,8 @@ public class SimpleWeatherForecastServiceTest {
     public void test_getWeatherForecast_returnsForecast_whenWeatherIsRain() throws Exception {
         Weather rain = new Weather("Rain", "little rain");
         WeatherData weatherData = new WeatherData("11111111", singletonList(rain));
-        OWMResponse owmResponse = new OWMResponse(singletonList(weatherData));
-        when(openWeatherMapAPIWrapper.getWeatherData()).thenReturn(owmResponse);
+        OpenWeatherMapResponse openWeatherMapResponse = new OpenWeatherMapResponse(singletonList(weatherData));
+        when(openWeatherMapAPIWrapper.getWeatherData()).thenReturn(openWeatherMapResponse);
 
 
         String returnValue = simpleWeatherForecastService.getWeatherForecast();
@@ -62,8 +62,8 @@ public class SimpleWeatherForecastServiceTest {
     public void test_getWeatherForecast_returnsForecast_whenWeatherIsNotRain() throws Exception {
         Weather rain = new Weather("Cloud", "some cloud");
         WeatherData weatherData = new WeatherData("11111111", singletonList(rain));
-        OWMResponse owmResponse = new OWMResponse(singletonList(weatherData));
-        when(openWeatherMapAPIWrapper.getWeatherData()).thenReturn(owmResponse);
+        OpenWeatherMapResponse openWeatherMapResponse = new OpenWeatherMapResponse(singletonList(weatherData));
+        when(openWeatherMapAPIWrapper.getWeatherData()).thenReturn(openWeatherMapResponse);
 
 
         String returnValue = simpleWeatherForecastService.getWeatherForecast();
@@ -74,8 +74,8 @@ public class SimpleWeatherForecastServiceTest {
 
     @Test
     public void test_getWeatherForecast_returnsForecast_whenThereIsNoWeatherData() throws Exception {
-        OWMResponse owmResponse = new OWMResponse(emptyList());
-        when(openWeatherMapAPIWrapper.getWeatherData()).thenReturn(owmResponse);
+        OpenWeatherMapResponse openWeatherMapResponse = new OpenWeatherMapResponse(emptyList());
+        when(openWeatherMapAPIWrapper.getWeatherData()).thenReturn(openWeatherMapResponse);
 
 
         String returnValue = simpleWeatherForecastService.getWeatherForecast();
@@ -87,8 +87,8 @@ public class SimpleWeatherForecastServiceTest {
     @Test
     public void test_getWeatherForecast_returnsForecast_whenThereIsNoWeather() throws Exception {
         WeatherData weatherData = new WeatherData("11111111", emptyList());
-        OWMResponse owmResponse = new OWMResponse(singletonList(weatherData));
-        when(openWeatherMapAPIWrapper.getWeatherData()).thenReturn(owmResponse);
+        OpenWeatherMapResponse openWeatherMapResponse = new OpenWeatherMapResponse(singletonList(weatherData));
+        when(openWeatherMapAPIWrapper.getWeatherData()).thenReturn(openWeatherMapResponse);
 
 
         String returnValue = simpleWeatherForecastService.getWeatherForecast();
@@ -101,8 +101,8 @@ public class SimpleWeatherForecastServiceTest {
     public void test_getWeatherForecast_returnsForecast_whenThereIsNoMain() throws Exception {
         Weather mainNull = new Weather(null, "some cloud");
         WeatherData weatherData = new WeatherData("11111111", singletonList(mainNull));
-        OWMResponse owmResponse = new OWMResponse(singletonList(weatherData));
-        when(openWeatherMapAPIWrapper.getWeatherData()).thenReturn(owmResponse);
+        OpenWeatherMapResponse openWeatherMapResponse = new OpenWeatherMapResponse(singletonList(weatherData));
+        when(openWeatherMapAPIWrapper.getWeatherData()).thenReturn(openWeatherMapResponse);
 
 
         String returnValue = simpleWeatherForecastService.getWeatherForecast();

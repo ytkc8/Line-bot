@@ -1,7 +1,7 @@
 package com.example.wrapper;
 
 import com.example.helper.APIUriGetter;
-import com.example.model.OWMResponse;
+import com.example.model.OpenWeatherMapResponse;
 import com.example.model.Weather;
 import com.example.model.WeatherData;
 import org.junit.Before;
@@ -49,10 +49,10 @@ public class DefaultOpenWeatherMapAPIWrapperTest {
                 .andRespond(withSuccess("{\"list\": [{\"dt\": \"1406106000\", \"weather\": [{\"main\": \"Rain\", \"description\": \"little rain\"}]}]}", MediaType.APPLICATION_JSON_UTF8));
 
 
-        OWMResponse owmResponse = defaultOpenWeatherMapAPIWrapper.getWeatherData();
+        OpenWeatherMapResponse openWeatherMapResponse = defaultOpenWeatherMapAPIWrapper.getWeatherData();
 
 
-        WeatherData weatherData = owmResponse.getList().get(0);
+        WeatherData weatherData = openWeatherMapResponse.getList().get(0);
         assertThat(weatherData.getDt(), equalTo("1406106000"));
         Weather weather = weatherData.getWeather().get(0);
         assertThat(weather.getMain(), equalTo("Rain"));

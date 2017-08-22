@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.model.OWMResponse;
+import com.example.model.OpenWeatherMapResponse;
 import com.example.model.Weather;
 import com.example.model.WeatherData;
 import com.example.wrapper.OpenWeatherMapAPIWrapper;
@@ -18,8 +18,8 @@ public class SimpleWeatherForecastService implements WeatherForcastService {
 
     @Override
     public String getWeatherForecast() {
-        OWMResponse owmResponse = openWeatherMapAPIWrapper.getWeatherData();
-        WeatherData weatherData = getWeatherData(owmResponse);
+        OpenWeatherMapResponse openWeatherMapResponse = openWeatherMapAPIWrapper.getWeatherData();
+        WeatherData weatherData = getWeatherData(openWeatherMapResponse);
         if (weatherData == null) {
             return errorMessage + " error code: 001";
         }
@@ -41,8 +41,8 @@ public class SimpleWeatherForecastService implements WeatherForcastService {
         }
     }
 
-    private WeatherData getWeatherData(OWMResponse owmResponse) {
-        return owmResponse.getList()
+    private WeatherData getWeatherData(OpenWeatherMapResponse openWeatherMapResponse) {
+        return openWeatherMapResponse.getList()
                 .stream()
                 .findFirst()
                 .orElse(null);

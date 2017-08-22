@@ -2,13 +2,13 @@ package com.example.model;
 
 import java.util.List;
 
-public class OWMResponse {
+public class OpenWeatherMapResponse {
     private List<WeatherData> list;
 
-    public OWMResponse() {
+    public OpenWeatherMapResponse() {
     }
 
-    public OWMResponse(List<WeatherData> list) {
+    public OpenWeatherMapResponse(List<WeatherData> list) {
         this.list = list;
     }
 
@@ -21,7 +21,7 @@ public class OWMResponse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        OWMResponse that = (OWMResponse) o;
+        OpenWeatherMapResponse that = (OpenWeatherMapResponse) o;
 
         return list != null ? list.equals(that.list) : that.list == null;
     }
@@ -33,7 +33,7 @@ public class OWMResponse {
 
     @Override
     public String toString() {
-        return "OWMResponse{" +
+        return "OpenWeatherMapResponse{" +
                 "list=" + list +
                 '}';
     }

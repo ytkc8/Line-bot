@@ -1,7 +1,7 @@
 package com.example.wrapper;
 
-import com.example.model.OWMResponse;
+import com.example.model.OpenWeatherMapResponse;
 
 public interface OpenWeatherMapAPIWrapper {
-    OWMResponse getWeatherData();
+    OpenWeatherMapResponse getWeatherData();
 }

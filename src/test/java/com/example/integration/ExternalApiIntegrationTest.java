@@ -18,7 +18,8 @@ import static org.junit.Assert.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(
         properties = {
-                "OPEN_WEATHER_MAP_API_KEY: 3a981d4a71950ac6430af06740e589b2"
+                "OPEN_WEATHER_MAP_API_KEY: 3a981d4a71950ac6430af06740e589b2",
+                "SERVICE_KEY_WEATHERS:"
         }
 )
 public class ExternalApiIntegrationTest {

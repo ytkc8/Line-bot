@@ -1,18 +1,26 @@
 package com.example.helper;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource(
+        properties = {
+                "OPEN_WEATHER_MAP_API_KEY: 3a981d4a71950ac6430af06740e589b2",
+                "SERVICE_KEY_WEATHERS: 天気:てんき:テンキ:weather"
+        }
+)
 public class DefaultServiceKeyGetterTest {
-    private DefaultServiceKeyGetter defaultServiceKeyGetter;
-
-    @Before
-    public void setUp() throws Exception {
-        defaultServiceKeyGetter = new DefaultServiceKeyGetter();
-    }
+    @Autowired
+    private ServiceKeyGetter defaultServiceKeyGetter;
 
     @Test
     public void test_getServiceKey_returnsText_weather() throws Exception {

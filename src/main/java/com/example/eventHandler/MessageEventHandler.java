@@ -1,5 +1,6 @@
 package com.example.eventHandler;
 
+import com.example.helper.ServiceKeyGetter;
 import com.example.service.ReplyMessageService;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.FollowEvent;
@@ -13,19 +14,20 @@ import java.util.Map;
 
 @LineMessageHandler
 public class MessageEventHandler {
+	private final ServiceKeyGetter serviceKeyGetter;
 	private final Map<String, ReplyMessageService> replyMessageServiceMap;
 
-	public MessageEventHandler(Map<String, ReplyMessageService> replyMessageServiceMap) {
+	public MessageEventHandler(
+			ServiceKeyGetter serviceKeyGetter,
+			Map<String, ReplyMessageService> replyMessageServiceMap
+	) {
+		this.serviceKeyGetter = serviceKeyGetter;
 		this.replyMessageServiceMap = replyMessageServiceMap;
 	}
 
 	@EventMapping
 	public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
-		// todo: this logic is not tested
-		String key = "default";
-		if ("天気".equals(event.getMessage().getText())) {
-			key = "weather";
-		}
+		String key = serviceKeyGetter.getServiceKey(event.getMessage().getText());
 		ReplyMessageService replyMessageService = replyMessageServiceMap.get(key);
 		replyMessageService.replyText(event);
 	}

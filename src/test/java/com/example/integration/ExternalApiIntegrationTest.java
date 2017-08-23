@@ -18,12 +18,6 @@ import static org.junit.Assert.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(
         properties = {
-                "DATABASE_URL: jdbc:mysql://localhost/enget_line_bot",
-                "DATABASE_USERNAME: root",
-                "DATABASE_PASSWORD:",
-                "MAIL_HOSTNAME:",
-                "MAIL_USERNAME:",
-                "MAIL_PASSWORD:",
                 "OPEN_WEATHER_MAP_API_KEY: 3a981d4a71950ac6430af06740e589b2"
         }
 )

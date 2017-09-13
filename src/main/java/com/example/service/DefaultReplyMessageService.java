@@ -12,11 +12,14 @@ import java.io.IOException;
 @Service("default")
 public class DefaultReplyMessageService implements ReplyMessageService {
     private final ReplyWrapper replyWrapper;
+    private final WordChainService wordChainService;
 
     public DefaultReplyMessageService(
-            ReplyWrapper replyWrapper
+            ReplyWrapper replyWrapper,
+            WordChainService wordChainService
     ) {
         this.replyWrapper = replyWrapper;
+        this.wordChainService = wordChainService;
     }
 
     @Override
@@ -30,9 +33,10 @@ public class DefaultReplyMessageService implements ReplyMessageService {
     }
 
     private ReplyMessage getReplyMessage(MessageEvent<TextMessageContent> event) {
+        String chainWord = wordChainService.getChainWord(event.getMessage().getText());
         return new ReplyMessage(
                 event.getReplyToken(),
-                new TextMessage(event.getMessage().getText())
+                new TextMessage(chainWord)
         );
     }
 

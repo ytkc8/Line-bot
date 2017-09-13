@@ -1,5 +1,8 @@
 package com.example.service;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class DefaultWordChainService implements WordChainService {
     private static final String SIRITORI = "しりとり";
     private static final String GORILA = "ゴリラ";
